@@ -1,5 +1,5 @@
 public class Phones {
-    private String PHONE_MODEL = "";
+    private String PHONE_MODEL;
     private int BROKEN;
     private int NUMBERS_OF_CHECKED_PHONES;
 

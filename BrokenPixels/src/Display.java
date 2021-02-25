@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Display extends JFrame implements MouseListener {
     public static final int TILE_SIDE_COUNT = 64;
     private Object[][] pixelCollection;
-    private Object[] phoneCollection;
+    private ArrayList<Integer> phoneBroken = new ArrayList<Integer>();
+    private ArrayList<String> phoneModel = new ArrayList<String>();
     private Object selectedPixel;
     private Object phone;
     Phones phones = new Phones();
@@ -16,8 +18,8 @@ public class Display extends JFrame implements MouseListener {
     private int BROKEN_PIXELS = 0;
     private int CHECKED_PIXELS = phones.getNUMBERS_OF_CHECKED_PHONES();
 
+
     public Display() {
-        this.phoneCollection = new Object[10];
         this.pixelCollection = new Object[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
         pixelCreator();
 
@@ -28,17 +30,7 @@ public class Display extends JFrame implements MouseListener {
 
 
     }
-    
-    public void DisplayV2() {
-        this.phoneCollection = new Object[10];
-        this.pixelCollection = new Object[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
-        pixelCreator();
 
-        this.setSize(800, 800);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.addMouseListener(this);
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -68,15 +60,19 @@ public class Display extends JFrame implements MouseListener {
 
         }
         CHECKED_PIXELS++;
-        if(CHECKED_PIXELS > 3) {
-
-            phoneCollection[phones.getNUMBERS_OF_CHECKED_PHONES()] = new Phones(generateRandModel(), brokenPhone());
-            System.out.print(phoneCollection[0]);
-
-            phones.setNUMBERS_OF_CHECKED_PHONES(phones.getNUMBERS_OF_CHECKED_PHONES()+1);
+        if(CHECKED_PIXELS >= 3) {
+            phoneModel.add(generateRandModel());
+            phoneBroken.add(brokenPhone());
+//            if(phones.getNUMBERS_OF_CHECKED_PHONES() == 5 || phones.getNUMBERS_OF_CHECKED_PHONES() == 10) {
+                System.out.print(phoneModel.get(phones.getNUMBERS_OF_CHECKED_PHONES()));
+                if (phoneBroken.get(phones.getNUMBERS_OF_CHECKED_PHONES()) == 1) {
+                    System.out.println("This phone is fine ");
+                } else {
+                    System.out.println("This phone is broken ");
+                }
+//            }
+            phones.setNUMBERS_OF_CHECKED_PHONES(phones.getNUMBERS_OF_CHECKED_PHONES() + 1);
             new Display();
-
-
         }
 
 
@@ -124,7 +120,7 @@ public class Display extends JFrame implements MouseListener {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
+        while (salt.length() < 10) { // length of the random string.
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
