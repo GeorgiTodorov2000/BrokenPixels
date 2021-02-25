@@ -61,7 +61,7 @@ public class Display extends JFrame implements MouseListener {
 
         }
         CHECKED_PIXELS++;
-        if(CHECKED_PIXELS >= 10) {
+        if(CHECKED_PIXELS >= 10 || BROKEN_PIXELS > 2048) {
             getNewPhone();
         }
 
@@ -101,7 +101,7 @@ public class Display extends JFrame implements MouseListener {
         String phoneStatus = "";
 
         if (BROKEN_PIXELS <= 2048) {
-            phoneStatus = "This phone is fine ";
+            phoneStatus = "This phone is still usable ";
         } else {
             phoneStatus = "This phone is broken ";
         }
@@ -118,7 +118,7 @@ public class Display extends JFrame implements MouseListener {
 
     //Checking if phone is usable
     private int brokenPhone() {
-        if(BROKEN_PIXELS == 2048) {//64x64 = 4096 If we have 50% broken pixels the phone is unusable
+        if(BROKEN_PIXELS > 2048) {//64x64 = 4096 If we have 50% broken pixels the phone is unusable
             System.out.println("This phone is no longer usable");
             return 0;
         } else {
