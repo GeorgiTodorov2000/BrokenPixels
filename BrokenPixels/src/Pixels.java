@@ -18,6 +18,8 @@ public class Pixels {
         this.id = id;
     }
 
+    public Pixels() {}
+
     public int getRow() { return row; }
 
     public int getCol() {
